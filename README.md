@@ -1,4 +1,4 @@
-# G1-14-L2
-Repository for L2 work
+# G1-14
+Repository for G1-14 work
 
 This is a test
