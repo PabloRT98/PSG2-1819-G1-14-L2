@@ -50,4 +50,7 @@ public interface ClinicService {
 
 	Collection<Visit> findVisitsByPetId(int petId);
 
+    void deleteOwner(int ownerId) throws DataAccessException;
+
+    void deletePet(int petId) throws DataAccessException;
 }
