@@ -5,14 +5,17 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="vets">
-    <h2>Veterinarians</h2>
-
+    <h2> <fmt:message key="Veterinarians"/></h2>
     <table id="vetsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Specialties</th>
+            <th><fmt:message key="Name"/></th>    
+            <th> <fmt:message key="Specialties"/>  </th>
+                
+         
         </tr>
+        
+
         </thead>
         <tbody>
         <c:forEach items="${vets.vetList}" var="vet">
@@ -34,10 +37,10 @@
     <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">View as XML</a>
+                <a href="<spring:url value="/vets.xml" htmlEscape="true" />"> <fmt:message key="viewAsXML"/></a>
             </td>
             <td>
-                <a href="<spring:url value="/vets.json" htmlEscape="true" />">View as JSON</a>
+                <a href="<spring:url value="/vets.json" htmlEscape="true" />"> <fmt:message key="viewAsJSON"/></a>
             </td>
         </tr>
     </table>

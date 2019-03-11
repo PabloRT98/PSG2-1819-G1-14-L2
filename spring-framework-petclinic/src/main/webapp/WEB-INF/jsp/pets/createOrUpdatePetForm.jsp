@@ -5,6 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
+
     <jsp:attribute name="customScript">
         <script>
             $(function () {
@@ -14,7 +15,7 @@
     </jsp:attribute>
     <jsp:body>
         <h2>
-            <c:if test="${pet['new']}">New </c:if> Pet
+            <c:if test="${pet['new']}"> <fmt:message key="New"/> </c:if>  <fmt:message key="Pet"/>
         </h2>
         <form:form modelAttribute="pet"
                    class="form-horizontal">
@@ -36,11 +37,11 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <c:choose>
                         <c:when test="${pet['new']}">
-                            <button class="btn btn-default" type="submit">Add Pet</button>
+                            <button class="btn btn-default" type="submit"> <fmt:message key="addPet"/></button>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-default" type="submit">Update Pet</button>
-                            <button class="btn btn-default" type="submit" name="delete">Delete Pet</button>
+                            <button class="btn btn-default" type="submit"> <fmt:message key="updatePet"/></button>
+                            <button class="btn btn-default" type="submit" name="delete"> <fmt:message key="deletePet"/></button>
                         </c:otherwise>
                     </c:choose>
                 </div>
