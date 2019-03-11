@@ -122,6 +122,12 @@ public class OwnerController {
         }
     }
 
+    @RequestMapping(value = "/owners/{ownerId}/edit", method = RequestMethod.POST, params="delete")
+    public String processDeleteOwner(@Valid Owner owner, @PathVariable("ownerId") int ownerId) {
+        this.clinicService.deleteOwner(ownerId);
+			return "redirect:/owners";
+    }
+
     /**
      * Custom handler for displaying an owner.
      *

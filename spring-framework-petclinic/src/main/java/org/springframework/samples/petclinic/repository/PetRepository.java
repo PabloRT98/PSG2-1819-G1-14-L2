@@ -57,4 +57,6 @@ public interface PetRepository {
      */
     void save(Pet pet) throws DataAccessException;
 
+    void deleteById(int id) throws DataAccessException;
+
 }
