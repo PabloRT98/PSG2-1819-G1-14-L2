@@ -11,15 +11,15 @@
 
     <table class="table table-striped">
         <tr>
-            <th><fmt:message key="Name"/></th>
+            <th><fmt:message key="name"/></th>
             <td><b><c:out value="${owner.firstName} ${owner.lastName}"/></b></td>
         </tr>
         <tr>
-            <th><fmt:message key="Address"/></th>
+            <th><fmt:message key="address"/></th>
             <td><c:out value="${owner.address}"/></td>
         </tr>
         <tr>
-            <th><fmt:message key="City"/></th>
+            <th><fmt:message key="city"/></th>
             <td><c:out value="${owner.city}"/></td>
         </tr>
         <tr>
@@ -49,11 +49,11 @@
             <tr>
                 <td valign="top">
                     <dl class="dl-horizontal">
-                        <dt><fmt:message key="Name"/></dt>
+                        <dt><fmt:message key="name"/></dt>
                         <dd><c:out value="${pet.name}"/></dd>
-                        <dt><fmt:message key="BirthDate"/></dt>
+                        <dt><fmt:message key="birthDate"/></dt>
                         <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
-                        <dt><fmt:message key="Type"/></dt>
+                        <dt><fmt:message key="type"/></dt>
                         <dd><c:out value="${pet.type.name}"/></dd>
                     </dl>
                 </td>
@@ -62,7 +62,7 @@
                         <thead>
                         <tr>
                             <th><fmt:message key="visitDate"/></th>
-                            <th><fmt:message key="Description"/></th>
+                            <th><fmt:message key="description"/></th>
                         </tr>
                         </thead>
                         <c:forEach var="visit" items="${pet.visits}">

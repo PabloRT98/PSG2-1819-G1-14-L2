@@ -15,16 +15,16 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${visit['new']}"> <fmt:message key="New"/> </c:if> <fmt:message key="Visit"/></h2>
+        <h2><c:if test="${visit['new']}"> <fmt:message key="New"/> </c:if> <fmt:message key="visit"/></h2>
 
-        <b> <fmt:message key="Pet"/></b>
+        <b> <fmt:message key="pet"/></b>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th> <fmt:message key="Name"/></th>
-                <th> <fmt:message key="BirthDate"/></th>
-                <th> <fmt:message key="Type"/></th>
-                <th> <fmt:message key="Owners"/></th>
+                <th> <fmt:message key="name"/></th>
+                <th> <fmt:message key="birthDate"/></th>
+                <th> <fmt:message key="type"/></th>
+                <th> <fmt:message key="owners"/></th>
             </tr>
             </thead>
             <tr>
@@ -53,8 +53,8 @@
         <b> <fmt:message key="previousVisit"/></b>
         <table class="table table-striped">
             <tr>
-                <th> <fmt:message key="Date"/></th>
-                <th> <fmt:message key="Description"/></th>
+                <th> <fmt:message key="date"/></th>
+                <th> <fmt:message key="description"/></th>
             </tr>
             <c:forEach var="visit" items="${visit.pet.visits}">
                 <c:if test="${!visit['new']}">

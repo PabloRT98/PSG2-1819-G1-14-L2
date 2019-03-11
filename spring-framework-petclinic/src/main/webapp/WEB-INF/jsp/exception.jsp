@@ -7,7 +7,7 @@
     <spring:url value="/resources/images/pets.png" var="petsImage"/>
     <img src="${petsImage}"/>
 
-    <h2> <fmt:message key="Something"/>  <fmt:message key="happened"/>...</h2>
+    <h2> <fmt:message key="something"/>  <fmt:message key="happened"/>...</h2>
 
     <p>${exception.message}</p>
 
