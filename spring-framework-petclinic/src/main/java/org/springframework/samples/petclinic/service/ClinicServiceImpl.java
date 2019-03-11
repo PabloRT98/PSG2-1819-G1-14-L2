@@ -17,12 +17,14 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
@@ -110,7 +112,25 @@ public class ClinicServiceImpl implements ClinicService {
 		return visitRepository.findByPetId(petId);
 	}
 
+	@Override
+	public Vet findVetById(int id) throws DataAccessException {
+		return vetRepository.findById(id);
+	}
+
     @Override
+    @Transactional
+	public void saveVet(Vet vet) throws DataAccessException {
+    	vetRepository.save(vet);
+	}
+
+	@Override
+	public Collection<Specialty> findSpecialties() throws DataAccessException {
+		return vetRepository.findSpecialties();
+		
+		
+	}
+	
+	@Override
     @Transactional
     public void deleteOwner(int ownerId) throws DataAccessException {
         ownerRepository.deleteById(ownerId);
@@ -121,5 +141,6 @@ public class ClinicServiceImpl implements ClinicService {
     public void deletePet(int petId) throws DataAccessException {
         petRepository.deleteById(petId);
     }
+
 
 }
