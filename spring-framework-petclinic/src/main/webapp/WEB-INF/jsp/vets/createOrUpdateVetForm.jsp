@@ -25,6 +25,7 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Vet</button>
+                        <button class="btn btn-default" type="submit" name="delete">Delete Vet</button>
                     </c:otherwise>
                 </c:choose>
             </div>

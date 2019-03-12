@@ -142,5 +142,10 @@ public class ClinicServiceImpl implements ClinicService {
         petRepository.deleteById(petId);
     }
 
+    @Override
+    @Transactional
+    public void deleteVet(int vetId) throws DataAccessException {
+        vetRepository.deleteById(vetId);
+    }
 
 }
