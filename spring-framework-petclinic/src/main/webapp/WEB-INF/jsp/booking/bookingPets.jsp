@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="hotel">
+<petclinic:layout pageName="Booking">
 
     <jsp:attribute name="customScript">
         <script>
@@ -15,7 +15,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${visit['new']}"> <fmt:message key="New"/> </c:if> <fmt:message key="booking"/></h2>
+        <h2><c:if test="${booking['new']}"> <fmt:message key="New"/> </c:if> <fmt:message key="booking"/></h2>
 
         <b> <fmt:message key="description"/></b>
         <table class="table table-striped">
@@ -30,17 +30,17 @@
             </tr>
             </thead>
             <tr>
-                <td><c:out value="${visit.pet.name}"/></td>
-                <td><petclinic:localDate date="${visit.pet.birthDate}" pattern="yyyy/MM/dd"/></td>
-                <td><c:out value="${visit.pet.type.name}"/></td>
-                <td><petclinic:localDate date="${visit.pet.checkin}" pattern="yyyy/MM/dd"/></td>
-                <td><petclinic:localDate date="${visit.pet.checkout}" pattern="yyyy/MM/dd"/></td>
-                <td><c:out value="${visit.pet.shortDescription}"/></td>
+                <td><c:out value="${booking.pet.name}"/></td>
+                <td><petclinic:localDate date="${booking.pet.birthDate}" pattern="yyyy/MM/dd"/></td>
+                <td><c:out value="${booking.pet.type.name}"/></td>
+                <td><petclinic:localDate date="${booking.pet.checkin}" pattern="yyyy/MM/dd"/></td>
+                <td><petclinic:localDate date="${booking.pet.checkout}" pattern="yyyy/MM/dd"/></td>
+                <td><c:out value="${booking.pet.shortDescription}"/></td>
 
             </tr>
         </table>
 
-        <form:form modelAttribute="visit" class="form-horizontal">
+        <form:form modelAttribute="booking" class="form-horizontal">
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Date" name="date"/>
                 <petclinic:inputField label="Description" name="description"/>
@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="petId" value="${visit.pet.id}"/>
+                    <input type="hidden" name="petId" value="${booking.pet.id}"/>
                     <button class="btn btn-default" type="submit"><fmt:message key="addBooking"/></button>
                 </div>
             </div>
@@ -61,11 +61,11 @@
                 <th> <fmt:message key="checkin"/></th>
                 <th> <fmt:message key="checkout"/></th>
             </tr>
-            <c:forEach var="visit" items="${visit.pet.visits}">
-                <c:if test="${!visit['new']}">
+            <c:forEach var="booking" items="${booking.pet.visits}">
+                <c:if test="${!booking['new']}">
                     <tr>
-                        <td><petclinic:localDate date="${visit.chekin}" pattern="yyyy/MM/dd"/></td>
-                        <td><petclinic:LocalDate date="${visit.checkout}"pattern="yyyy/MM/dd"/></td>
+                        <td><petclinic:localDate date="${booking.chekin}" pattern="yyyy/MM/dd"/></td>
+                        <td><petclinic:LocalDate date="${booking.checkout}"pattern="yyyy/MM/dd"/></td>
                     </tr>
                 </c:if>
             </c:forEach>

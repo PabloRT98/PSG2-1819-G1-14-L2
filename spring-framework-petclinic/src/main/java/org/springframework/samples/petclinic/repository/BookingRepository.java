@@ -15,9 +15,8 @@
  */
 package org.springframework.samples.petclinic.repository;
 
-
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Booking;
 
 /**
  * Repository class for <code><Pet></code> domain objects All method names are compliant with Spring Data naming
@@ -28,9 +27,9 @@ import org.springframework.samples.petclinic.model.Pet;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface HotelRepository {
+public interface BookingRepository {
 
-    void save(Pet pet) throws DataAccessException;
+  void save(Booking booking) throws DataAccessException;
 
 
 }
