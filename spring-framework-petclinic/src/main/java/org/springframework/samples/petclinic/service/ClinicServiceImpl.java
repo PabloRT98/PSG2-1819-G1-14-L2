@@ -31,6 +31,7 @@ import org.springframework.samples.petclinic.repository.VetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.samples.petclinic.repository.HotelRepository;
 
 /**
  * Mostly used as a facade for all Petclinic controllers
@@ -122,4 +123,11 @@ public class ClinicServiceImpl implements ClinicService {
         petRepository.deleteById(petId);
     }
 
+    @Override
+    @Transactional
+    public void saveBooking(Pet pet) throws DataAccessException {
+    HotelRepository.save(pet);
+    }
+
+   
 }
