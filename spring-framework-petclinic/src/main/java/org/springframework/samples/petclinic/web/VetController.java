@@ -15,24 +15,18 @@
  */
 package org.springframework.samples.petclinic.web;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,6 +103,12 @@ public class VetController {
         ModelAndView mav = new ModelAndView("vets/vetDetails");
         mav.addObject(this.clinicService.findVetById(vetId));
         return mav;
+    }
+
+    @RequestMapping(value = "/vets/{vetId}/edit", method = RequestMethod.POST, params="delete")
+    public String processDeleteOwnerForm(@Valid Vet vet, @PathVariable("vetId") int vetId) {
+            this.clinicService.deleteVet(vetId);
+            return "redirect:/vets.html";
     }
 
 
