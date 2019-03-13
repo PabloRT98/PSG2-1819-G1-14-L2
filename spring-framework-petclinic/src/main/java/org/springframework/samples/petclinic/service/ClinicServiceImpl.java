@@ -123,7 +123,8 @@ public class ClinicServiceImpl implements ClinicService {
     	vetRepository.save(vet);
 	}
 
-	@Override
+    @Override
+    @Transactional(readOnly = true)
 	public Collection<Specialty> findSpecialties() throws DataAccessException {
 		return vetRepository.findSpecialties();
 		
