@@ -7,19 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name = "Booking")
+@Table(name = "bookings")
 public class Booking extends NamedEntity {
-
+    @NotNull
     @Column(name = "checkin")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate checkin;
-
-  @Column(name = "checkout")
+    @NotNull
+    @Column(name = "checkout")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate checkout;
 
@@ -28,7 +29,6 @@ public class Booking extends NamedEntity {
     private Pet pet;
 
     @Column(name="description")
-    @JoinColumn(name="description_id")
     private String description;
 
 

@@ -15,21 +15,22 @@
  */
 package org.springframework.samples.petclinic.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.service.ClinicService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 import javax.validation.Valid;
 
-import java.util.Collection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Booking;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Juergen Hoeller
@@ -37,10 +38,8 @@ import java.util.Collection;
  * @author Arjen Poutsma
  */
 @Controller
-@RequestMapping("/pet/{petId}")
 public class BookingController {
 
-    private static final String BookingPets = "booking/bookingPets";
     private final ClinicService clinicService;
 
     @Autowired
@@ -48,67 +47,63 @@ public class BookingController {
         this.clinicService = clinicService;
     }
 
-    @ModelAttribute("types")
-    public Collection<PetType> populatePetTypes() {
-        return this.clinicService.findPetTypes();
-    }
-
-    @ModelAttribute("owner")
-    public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-        return this.clinicService.findOwnerById(ownerId);
-    }
-
-    @InitBinder("owner")
-    public void initOwnerBinder(WebDataBinder dataBinder) {
+    @InitBinder
+    public void setAllowedFields(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
-    @InitBinder("pet")
-    public void initPetBinder(WebDataBinder dataBinder) {
-        dataBinder.setValidator(new PetValidator());
-    }
-
-    @RequestMapping(value = "/pets/new", method = RequestMethod.GET)
-    public String initCreationForm(Owner owner, ModelMap model) {
-        Pet pet = new Pet();
-        owner.addPet(pet);
-        model.put("pet", pet);
-        return BookingPets;
-    }
-
-    @RequestMapping(value = "/pets/new", method = RequestMethod.POST)
-    public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
-            result.rejectValue("name", "duplicate", "already exists");
-        }
-        if (result.hasErrors()) {
-            model.put("pet", pet);
-            return BookingPets;
-        } else {
-            owner.addPet(pet);
-            this.clinicService.savePet(pet);
-            return "redirect:/owners/{ownerId}";
-        }
-    }
-
-    @RequestMapping(value = "/booking/{petId}/edit", method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
+    /**
+     * Called before each and every @RequestMapping annotated method.
+     * 2 goals:
+     * - Make sure we always have fresh data
+     * - Since we do not use the session scope, make sure that Pet object always has an id
+     * (Even though id is not part of the form fields)
+     *
+     * @param petId
+     * @return Pet
+     */
+    @ModelAttribute("booking")
+    public Booking loadPetWithBooking(@PathVariable("petId") int petId) {
         Pet pet = this.clinicService.findPetById(petId);
-        model.put("pet", pet);
-        return BookingPets;
+        Booking booking = new Booking();
+        pet.addBooking(booking);
+        return booking;
     }
 
-    @RequestMapping(value = "/booking/{petId}/edit", method = RequestMethod.POST)
-    public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model) {
+    @RequestMapping(value = "/owners/*/pets/{petId}/bookings/new", method = RequestMethod.GET)
+    public String initNewBookingForm(@PathVariable("petId") int petId, Map<String, Object> model) {
+        return "pets/createOrUpdateBookingForm";
+    }
+
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/new", method = RequestMethod.POST)
+    public String processNewHotelForm(@Valid Booking booking, BindingResult result) {
         if (result.hasErrors()) {
-            model.put("pet", pet);
-            return BookingPets;
+            return "pets/createOrUpdateBookingForm";
         } else {
-            owner.addPet(pet);
-            this.clinicService.savePet(pet);
+            this.clinicService.saveBooking(booking);
             return "redirect:/owners/{ownerId}";
         }
     }
+
+    @RequestMapping(value = "/owners/*/pets/{petId}/bookings", method = RequestMethod.GET)
+    public String showbookings(@PathVariable int petId, Map<String, Object> model) {
+        model.put("bookings", this.clinicService.findPetById(petId).getBookings());
+        return "bookingList";
+    }
+    
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/{bookingId}/delete", method = RequestMethod.GET)
+    public String delete(@PathVariable("bookingId") int bookingId, @PathVariable("petId") int petId) {
+       
+        Pet pet=this.clinicService.findPetById(petId);
+        Booking booking=this.clinicService.findBookingById(bookingId);
+        pet.deleteBooking(booking);
+        this.clinicService.savePet(pet);
+
+        this.clinicService.deleteBooking(bookingId);
+        return "redirect:/owners/{ownerId}";
+     
+    }
+
     }
 
 

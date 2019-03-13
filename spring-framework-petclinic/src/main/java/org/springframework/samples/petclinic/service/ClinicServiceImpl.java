@@ -131,5 +131,25 @@ public class ClinicServiceImpl implements ClinicService {
         bookingRepository.save(booking);
     }
 
+    @Override
+    public Collection<Booking> findBookingsByPetName(String petName) {
+        return bookingRepository.findByPetName(petName);
+    }
+
+    @Override
+    public void deleteBooking(int bookingId) throws DataAccessException {
+bookingRepository.delete(bookingId);
+    }
+
+    @Override
+    public Booking findBookingById(int bookingId) throws DataAccessException {
+        return bookingRepository.findByBookingId(bookingId);
+    }
+
+    @Override
+    public void deleteAllBookingsByPetNanme(String petName) throws DataAccessException {
+this.bookingRepository.deleteAllBookingsByPetName(petName);
+    }
+
    
 }

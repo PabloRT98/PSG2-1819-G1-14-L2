@@ -15,7 +15,14 @@
  */
 package org.springframework.samples.petclinic.repository;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Booking;
 
 /**
@@ -31,5 +38,19 @@ public interface BookingRepository {
 
   void save(Booking booking) throws DataAccessException;
 
+  List<Booking> findByPetName(String petName);
+    
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Booking b where b.id=:bookingId")
+    void delete(@Param(value = "bookingId") int bookingId) throws DataAccessException;
+    
+    @Query("SELECT v FROM Booking x where x.id=:bookingId")
+	Booking findByBookingId(@Param(value = "bookingId") int bookingId) throws DataAccessException;
+
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Booking x where x.pet.name=:petName")
+	void deleteAllBookingsByPetName(@Param(value = "petName") String petName) throws DataAccessException;
 
 }

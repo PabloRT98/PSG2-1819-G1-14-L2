@@ -56,4 +56,12 @@ public interface ClinicService {
     void deletePet(int petId) throws DataAccessException;
 
     void saveBooking(Booking booking) throws DataAccessException;
+
+    Collection<Booking> findBookingsByPetName(String petName);
+    
+    void deleteBooking(int bookingId) throws DataAccessException;
+
+	Booking findBookingById(int bookingId) throws DataAccessException;
+	
+	void deleteAllBookingsByPetNanme(String petName) throws DataAccessException;
 }
