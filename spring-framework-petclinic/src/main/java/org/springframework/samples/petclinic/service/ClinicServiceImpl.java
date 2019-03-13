@@ -21,12 +21,14 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.petclinic.repository.BookingRepository;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VetRepository;
@@ -35,8 +37,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
+ * Mostly used as a facade for all Petclinic controllers Also a placeholder
+ * for @Transactional and @Cacheable annotations
  *
  * @author Michael Isvy
  */
@@ -47,13 +49,16 @@ public class ClinicServiceImpl implements ClinicService {
     private VetRepository vetRepository;
     private OwnerRepository ownerRepository;
     private VisitRepository visitRepository;
+    private BookingRepository bookingRepository;
 
     @Autowired
-    public ClinicServiceImpl(PetRepository petRepository, VetRepository vetRepository, OwnerRepository ownerRepository, VisitRepository visitRepository) {
+    public ClinicServiceImpl(PetRepository petRepository, VetRepository vetRepository, OwnerRepository ownerRepository,
+            VisitRepository visitRepository, BookingRepository bookingRepository) {
         this.petRepository = petRepository;
         this.vetRepository = vetRepository;
         this.ownerRepository = ownerRepository;
         this.visitRepository = visitRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -80,13 +85,11 @@ public class ClinicServiceImpl implements ClinicService {
         ownerRepository.save(owner);
     }
 
-
     @Override
     @Transactional
     public void saveVisit(Visit visit) throws DataAccessException {
         visitRepository.save(visit);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -107,30 +110,29 @@ public class ClinicServiceImpl implements ClinicService {
         return vetRepository.findAll();
     }
 
-	@Override
-	public Collection<Visit> findVisitsByPetId(int petId) {
-		return visitRepository.findByPetId(petId);
-	}
+    @Override
+    public Collection<Visit> findVisitsByPetId(int petId) {
+        return visitRepository.findByPetId(petId);
+    }
 
-	@Override
-	public Vet findVetById(int id) throws DataAccessException {
-		return vetRepository.findById(id);
-	}
+    @Override
+    public Vet findVetById(int id) throws DataAccessException {
+        return vetRepository.findById(id);
+    }
 
     @Override
     @Transactional
-	public void saveVet(Vet vet) throws DataAccessException {
-    	vetRepository.save(vet);
-	}
+    public void saveVet(Vet vet) throws DataAccessException {
+        vetRepository.save(vet);
+    }
 
-	@Override
-	public Collection<Specialty> findSpecialties() throws DataAccessException {
-		return vetRepository.findSpecialties();
-		
-		
-	}
-	
-	@Override
+    @Override
+    public Collection<Specialty> findSpecialties() throws DataAccessException {
+        return vetRepository.findSpecialties();
+
+    }
+
+    @Override
     @Transactional
     public void deleteOwner(int ownerId) throws DataAccessException {
         ownerRepository.deleteById(ownerId);
@@ -146,6 +148,12 @@ public class ClinicServiceImpl implements ClinicService {
     @Transactional
     public void deleteVet(int vetId) throws DataAccessException {
         vetRepository.deleteById(vetId);
+    }
+
+    @Override
+    @Transactional
+    public void saveBooking(Booking booking) throws DataAccessException {
+        bookingRepository.save(booking);
     }
 
 }

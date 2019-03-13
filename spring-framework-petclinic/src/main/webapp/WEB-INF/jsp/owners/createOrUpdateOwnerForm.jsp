@@ -7,8 +7,10 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
+        <fmt:message key="owners"/>
+
     <h2>
-        <c:if test="${owner['new']}">New </c:if> Owner
+        <c:if test="${owner['new']}"><fmt:message key="New"/> </c:if> <fmt:message key="owner"/>
     </h2>
     <form:form modelAttribute="owner" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
@@ -22,11 +24,11 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${owner['new']}">
-                        <button class="btn btn-default" type="submit">Add Owner</button>
+                        <button class="btn btn-default" type="submit"><fmt:message key="addOwner"/></button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Owner</button>
-                        <button class="btn btn-default" type="submit" name="delete">Delete Owner</button>
+                        <button class="btn btn-default" type="submit"><fmt:message key="updateOwner"/></button>
+                        <button class="btn btn-default" type="submit" name="delete"><fmt:message key="deleteOwner"/></button>
                     </c:otherwise>
                 </c:choose>
             </div>
