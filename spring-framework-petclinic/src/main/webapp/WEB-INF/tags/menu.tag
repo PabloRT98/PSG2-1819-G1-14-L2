@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
@@ -18,19 +19,22 @@
         <div class="navbar-collapse collapse" id="main-navbar">
             <ul class="nav navbar-nav navbar-right">
 
-                <petclinic:menuItem active="${name eq 'home'}" url="/" title="home page">
+                <fmt:message key="home" var="home"/>
+                <petclinic:menuItem active="${name eq 'home'}" url="/" title="${home}">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <span>Home</span>
+                    <span><fmt:message key="home"/></span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'owners'}" url="/owners/find.html" title="find owners">
+                <fmt:message key="findOwners" var="findOwners"/>
+                <petclinic:menuItem active="${name eq 'owners'}" url="/owners/find.html" title="${findOwners}">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find owners</span>
+                    <span><fmt:message key="findOwners"/> </span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'vets'}" url="/vets.html" title="veterinarians">
+                                    <fmt:message key="veterinarians" var="veterinarians"/>
+                    <petclinic:menuItem active="${name eq 'vets'}" url="/vets.html" title="${veterinarians}">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Veterinarians</span>
+                    <span><fmt:message key="veterinarians"/> </span>
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups.html"
