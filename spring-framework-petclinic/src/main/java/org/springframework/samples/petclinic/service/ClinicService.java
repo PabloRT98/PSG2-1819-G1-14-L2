@@ -18,11 +18,10 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Booking;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 
@@ -39,8 +38,6 @@ public interface ClinicService {
     Owner findOwnerById(int id) throws DataAccessException;
 
     Pet findPetById(int id) throws DataAccessException;
-    
-    Vet findVetById(int id) throws DataAccessException;
 
     void savePet(Pet pet) throws DataAccessException;
 
@@ -49,20 +46,22 @@ public interface ClinicService {
     Collection<Vet> findVets() throws DataAccessException;
 
     void saveOwner(Owner owner) throws DataAccessException;
-    
-    void saveVet(Vet vet) throws DataAccessException;
 
     Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException;
 
-	Collection<Visit> findVisitsByPetId(int petId);
+    Collection<Visit> findVisitsByPetId(int petId);
 
-	Collection<Specialty> findSpecialties() throws DataAccessException;
-	
-	void deleteOwner(int ownerId) throws DataAccessException;
+    void deleteOwner(int ownerId) throws DataAccessException;
 
-	void deletePet(int petId) throws DataAccessException;
-
-    void deleteVet(int vetId) throws DataAccessException;
+    void deletePet(int petId) throws DataAccessException;
 
     void saveBooking(Booking booking) throws DataAccessException;
+
+    Collection<Booking> findBookingsByPetId(int petId);
+
+    void deleteBooking(int bookingId) throws DataAccessException;
+
+	Booking findBookingById(int bookingId) throws DataAccessException;
+
+	void deleteAllBookingsByPetId(int petId) throws DataAccessException;
 }

@@ -51,3 +51,8 @@ INSERT INTO visits VALUES (1, 7, '2010-03-04', 'rabies shot') ON CONFLICT DO NOT
 INSERT INTO visits VALUES (2, 8, '2011-03-04', 'rabies shot') ON CONFLICT DO NOTHING;
 INSERT INTO visits VALUES (3, 8, '2009-06-04', 'neutered') ON CONFLICT DO NOTHING;
 INSERT INTO visits VALUES (4, 7, '2008-09-04', 'spayed') ON CONFLICT DO NOTHING;
+
+INSERT INTO bookings VALUES (1, 'Leo', 'Le gusta jugar con pelotas', '2019-02-11', '2019-02-13') ON CONFLICT DO NOTHING;
+INSERT INTO bookings VALUES (2, 'George', 'Le gusta comer carne', '2019-06-30', '2019-07-01') ON CONFLICT DO NOTHING;
+INSERT INTO bookings VALUES (3, 'Iggy', 'Odia banarse', '2019-05-23', '2019-05-25') ON CONFLICT DO NOTHING;
+INSERT INTO bookings VALUES (4, 'Sly', 'Muerde', '2019-02-14', '2019-02-20') ON CONFLICT DO NOTHING;

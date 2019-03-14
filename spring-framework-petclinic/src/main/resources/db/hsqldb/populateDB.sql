@@ -51,3 +51,8 @@ INSERT INTO visits VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits VALUES (4, 7, '2013-01-04', 'spayed');
+
+INSERT INTO bookings VALUES (1, 1, 'Le gusta jugar con pelotas', '2019-02-11', '2019-02-13');
+INSERT INTO bookings VALUES (2, 1, 'Le gusta comer carne', '2019-06-30', '2019-07-01');
+INSERT INTO bookings VALUES (3, 1, 'Odia banarse', '2019-05-23', '2019-05-25');
+INSERT INTO bookings VALUES (4, 1, 'Muerde', '2019-02-14', '2019-02-20');
