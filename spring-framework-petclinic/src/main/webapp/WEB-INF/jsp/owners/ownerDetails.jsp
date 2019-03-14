@@ -42,7 +42,7 @@
     <br/>
     <br/>
     <br/>
-    <h2><fmt:message key="PetsAndVisits"/></h2>
+    <h2><fmt:message key="petsAndVisits"/></h2>
 
     <table class="table table-striped">
         <c:forEach var="pet" items="${owner.pets}">
@@ -64,7 +64,7 @@
                         <tr>
                             <th><fmt:message key="visitDate"/></th>
                             <th><fmt:message key="description"/></th>
-                            <th>Bookings</th>
+                            <th><fmt:message key="bookings"/></th>
                         </tr>
                         </thead>
                         <c:forEach var="visit" items="${pet.visits}">
@@ -93,7 +93,7 @@
                                     <spring:param name="ownerId" value="${owner.id}"/>
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
-                                <a href="${fn:escapeXml(bookingUrl)}">Bookings of this pet</a>
+                                <a href="${fn:escapeXml(bookingUrl)}"><fmt:message key="bookingsofpet"/></a>
                             </td>
                         </tr>
                     </table>

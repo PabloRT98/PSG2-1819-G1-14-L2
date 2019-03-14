@@ -7,17 +7,17 @@
 
 <petclinic:layout pageName="bookings">
 	<h2>
-		Bookings of
+		<fmt:message key ="bookingsof"/>
 		<c:out
 			value="${pet.name } (${pet.owner.firstName } ${pet.owner.lastName })" />
 	</h2>
 	<table id="bookingTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Description</th>
+				<th><fmt:message key ="description"/></th>
 				<th>Checkin</th>
 				<th>Checkout</th>
-				<th>Actions</th>
+				<th><fmt:message key ="actions"/></th>
 
 			</tr>
 
@@ -38,14 +38,14 @@
 							<spring:param name="ownerId" value="${booking.pet.owner.id}" />
 							<spring:param name="petId" value="${booking.pet.id}" />
 							<spring:param name="bookId" value="${booking.id}" />
-						</spring:url> <a href="${fn:escapeXml(editBookUrl)}">Edit booking</a>
+						</spring:url> <a href="${fn:escapeXml(editBookUrl)}"><fmt:message key ="editBook"/></a>
 						
 						<spring:url value="/owners/{ownerId}/pets/{petId}/bookings/{bookingId}/delete"
 							var="deleteBookUrl">
 							<spring:param name="ownerId" value="${booking.pet.owner.id}" />
 							<spring:param name="petId" value="${booking.pet.id}" />
 							<spring:param name="bookingId" value="${booking.id}" />
-						</spring:url> <a href="${fn:escapeXml(deleteBookUrl)}">Delete booking</a>
+						</spring:url> <a href="${fn:escapeXml(deleteBookUrl)}"><fmt:message key ="deleteBook"/></a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -56,6 +56,6 @@
 							var="newBookUrl">
 							<spring:param name="ownerId" value="${booking.pet.owner.id}" />
 							<spring:param name="petId" value="${booking.pet.id}" />
-						</spring:url> <a class="btn btn-default" href="${fn:escapeXml(newBookUrl)}">New booking</a>
+						</spring:url> <a class="btn btn-default" href="${fn:escapeXml(newBookUrl)}"><fmt:message key ="newBook"/></a>
 	
 </petclinic:layout>
