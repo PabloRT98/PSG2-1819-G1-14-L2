@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "bookings")
-public class Booking extends NamedEntity {
+public class Booking extends BaseEntity {
     @NotNull
     @Column(name = "checkin")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -28,8 +28,8 @@ public class Booking extends NamedEntity {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @Column(name="description")
-    private String description;
+    @Column(name="shortDescription")
+    private String shortDescription;
 
 
 
@@ -53,11 +53,11 @@ public class Booking extends NamedEntity {
     public Pet getPet(){
         return this.pet;
     }
-    public void setDescription(String description){
-        this.description=description;
+    public void setShortDescription(String shortDescription){
+        this.shortDescription=shortDescription;
 }
-    public String getDescription(){
-        return this.description;
+    public String getShortDescription(){
+        return this.shortDescription;
     }
 
 

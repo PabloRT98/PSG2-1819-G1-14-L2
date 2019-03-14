@@ -38,19 +38,19 @@ public interface BookingRepository {
 
   void save(Booking booking) throws DataAccessException;
 
-  List<Booking> findByPetName(String petName);
+  List<Booking> findByPetId(int petId);
     
     @Transactional
     @Modifying
     @Query("DELETE FROM Booking b where b.id=:bookingId")
     void delete(@Param(value = "bookingId") int bookingId) throws DataAccessException;
     
-    @Query("SELECT v FROM Booking x where x.id=:bookingId")
+    @Query("SELECT x FROM Booking x where x.id=:bookingId")
 	Booking findByBookingId(@Param(value = "bookingId") int bookingId) throws DataAccessException;
 
 	@Transactional
 	@Modifying
-	@Query("DELETE FROM Booking x where x.pet.name=:petName")
-	void deleteAllBookingsByPetName(@Param(value = "petName") String petName) throws DataAccessException;
+	@Query("DELETE FROM Booking x where x.pet.id=:petId")
+	void deleteAllBookingsByPetId(@Param(value = "petId") int petId) throws DataAccessException;
 
 }

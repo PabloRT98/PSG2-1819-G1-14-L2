@@ -38,17 +38,17 @@
 
         <form:form modelAttribute="booking" class="form-horizontal">
             <div class="form-group has-feedback">
-            	<fmt:message var="description" key="description"/>
+            	<fmt:message var="shortDescription" key="shortDescription"/>
             	<fmt:message var="checkin" key="checkin"/>
             	<fmt:message var="checkout" key="checkout"/>
-                <petclinic:inputField label="${description}" name="description"/>
+                <petclinic:inputField label="${shortDescription}" name="shortDescription"/>
                 <petclinic:inputField label="${checkin}" name="checkin"/>
                 <petclinic:inputField label="${checkout}" name="checkout"/>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="petName" value="${booking.petName}"/>
+                    <input type="hidden" name="petId" value="${booking.petId}"/>
                     <button class="btn btn-default" type="submit"><fmt:message key="addBooking"/></button>
                 </div>
             </div>
@@ -58,14 +58,14 @@
         <b><fmt:message key="previousBooking"/></b>
         <table class="table table-striped">
             <tr>
-            	<th><fmt:message key="description"/></th>
+            	<th><fmt:message key="shortDescription"/></th>
                 <th><fmt:message key="checkin"/></th>
                 <th><fmt:message key="checkout"/></th>
             </tr>
             <c:forEach var="booking" items="${booking.pet.bookings}">
                 <c:if test="${!booking['new']}">
                     <tr>
-                     	<td><c:out value="${booking.description}"/></td>
+                     	<td><c:out value="${booking.shortDescription}"/></td>
                         <td><petclinic:localDate date="${booking.checkin}" pattern="yyyy/MM/dd"/></td>
                         <td><petclinic:localDate date="${booking.checkout}" pattern="yyyy/MM/dd"/></td>
                     </tr>

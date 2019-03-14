@@ -57,11 +57,11 @@ public interface ClinicService {
 
     void saveBooking(Booking booking) throws DataAccessException;
 
-    Collection<Booking> findBookingsByPetName(String petName);
+    Collection<Booking> findBookingsByPetId(int petId);
     
     void deleteBooking(int bookingId) throws DataAccessException;
 
 	Booking findBookingById(int bookingId) throws DataAccessException;
 	
-	void deleteAllBookingsByPetNanme(String petName) throws DataAccessException;
+	void deleteAllBookingsByPetId(int petId) throws DataAccessException;
 }

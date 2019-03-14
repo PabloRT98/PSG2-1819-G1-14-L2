@@ -132,8 +132,8 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public Collection<Booking> findBookingsByPetName(String petName) {
-        return bookingRepository.findByPetName(petName);
+    public Collection<Booking> findBookingsByPetId(int petId) {
+        return bookingRepository.findByPetId(petId);
     }
 
     @Override
@@ -147,8 +147,8 @@ bookingRepository.delete(bookingId);
     }
 
     @Override
-    public void deleteAllBookingsByPetNanme(String petName) throws DataAccessException {
-this.bookingRepository.deleteAllBookingsByPetName(petName);
+    public void deleteAllBookingsByPetId(int petId) throws DataAccessException {
+this.bookingRepository.deleteAllBookingsByPetId(petId);
     }
 
    
