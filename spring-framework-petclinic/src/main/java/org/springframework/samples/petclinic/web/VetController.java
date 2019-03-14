@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -52,7 +53,7 @@ public class VetController {
     public VetController(ClinicService clinicService) {
         this.clinicService = clinicService;
     }
-    
+
     @ModelAttribute("specialties")
     public Collection<Specialty> populateSpecialties() {
         return this.clinicService.findSpecialties();
@@ -78,28 +79,44 @@ public class VetController {
         vets.getVetList().addAll(this.clinicService.findVets());
         return vets;
     }
-    
+
+    @RequestMapping(value = "/vets/new", method = RequestMethod.GET)
+    public String initCreationForm(Map<String, Object> model) {
+        Vet vet = new Vet();
+        model.put("vet", vet);
+        return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+    }
+
+    @RequestMapping(value = "/vets/new", method = RequestMethod.POST)
+    public String processCreationForm(@Valid Vet vet, BindingResult result) {
+        if (result.hasErrors()) {
+            return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+        } else {
+            this.clinicService.saveVet(vet);
+            return "redirect:/vets/" + vet.getId();
+        }
+    }
+
     @RequestMapping(value = "/vets/{vetId}/edit", method = RequestMethod.GET)
-    public String initUpdateOwnerForm(@PathVariable("vetId") int vetId, Model model) {
+    public String initUpdateVetForm(@PathVariable("vetId") int vetId, Model model) {
         Vet vet = this.clinicService.findVetById(vetId);
         model.addAttribute(vet);
         return VIEWS_VET_CREATE_OR_UPDATE_FORM;
     }
 
     @RequestMapping(value = "/vets/{vetId}/edit", method = RequestMethod.POST)
-    public String processUpdateOwnerForm(@Valid Vet vet, BindingResult result, @PathVariable("vetId") int vetId) {
+    public String processUpdateVetForm(@Valid Vet vet, BindingResult result, @PathVariable("vetId") int vetId) {
         if (result.hasErrors()) {
             return VIEWS_VET_CREATE_OR_UPDATE_FORM;
         } else {
         	vet.setId(vetId);
-        	vet.setSpecialtiesInternal(clinicService.findVetById(vetId).getSpecialtiesInternal());
             this.clinicService.saveVet(vet);
             return "redirect:/vets/{vetId}";
         }
     }
-    
+
     @RequestMapping("/vets/{vetId}")
-    public ModelAndView showOwner(@PathVariable("vetId") int vetId) {
+    public ModelAndView showVet(@PathVariable("vetId") int vetId) {
         ModelAndView mav = new ModelAndView("vets/vetDetails");
         mav.addObject(this.clinicService.findVetById(vetId));
         return mav;

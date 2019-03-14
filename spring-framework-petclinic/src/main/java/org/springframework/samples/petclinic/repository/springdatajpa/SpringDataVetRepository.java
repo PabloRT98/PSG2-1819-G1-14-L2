@@ -31,7 +31,7 @@ import org.springframework.samples.petclinic.repository.VetRepository;
  * @since 15.1.2013
  */
 public interface SpringDataVetRepository extends VetRepository, Repository<Vet, Integer> {
-	
+
 		@Override
 	    @Query("SELECT s FROM Specialty s ORDER BY s.name")
 	    List<Specialty> findSpecialties() throws DataAccessException;
