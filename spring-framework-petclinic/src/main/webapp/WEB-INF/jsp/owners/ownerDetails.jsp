@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
@@ -63,6 +64,7 @@
                         <tr>
                             <th><fmt:message key="visitDate"/></th>
                             <th><fmt:message key="description"/></th>
+                            <th>Bookings</th>
                         </tr>
                         </thead>
                         <c:forEach var="visit" items="${pet.visits}">
@@ -85,6 +87,13 @@
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitUrl)}"><fmt:message key="addVisit"/></a>
+                            </td>
+                            <td>
+                                <spring:url value="/owners/{ownerId}/pets/{petId}/bookings" var="bookingUrl">
+                                    <spring:param name="ownerId" value="${owner.id}"/>
+                                    <spring:param name="petId" value="${pet.id}"/>
+                                </spring:url>
+                                <a href="${fn:escapeXml(bookingUrl)}">Bookings of this pet</a>
                             </td>
                         </tr>
                     </table>

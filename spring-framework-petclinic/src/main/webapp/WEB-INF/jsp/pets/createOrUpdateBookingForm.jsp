@@ -48,30 +48,20 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="petId" value="${booking.petId}"/>
-                    <button class="btn btn-default" type="submit"><fmt:message key="addBooking"/></button>
+                    <input type="hidden" name="petId" value="${booking.pet.id}"/>
+                    <c:choose>
+                    <c:when test="${booking['new']}">
+                        <button class="btn btn-default" type="submit">Añadir Booking</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-default" type="submit">Actualizar Booking</button>
+                        </c:otherwise>
+                        </c:choose>
+               
+                       
                 </div>
             </div>
         </form:form>
-
-        <br/>
-        <b><fmt:message key="previousBooking"/></b>
-        <table class="table table-striped">
-            <tr>
-            	<th><fmt:message key="shortDescription"/></th>
-                <th><fmt:message key="checkin"/></th>
-                <th><fmt:message key="checkout"/></th>
-            </tr>
-            <c:forEach var="booking" items="${booking.pet.bookings}">
-                <c:if test="${!booking['new']}">
-                    <tr>
-                     	<td><c:out value="${booking.shortDescription}"/></td>
-                        <td><petclinic:localDate date="${booking.checkin}" pattern="yyyy/MM/dd"/></td>
-                        <td><petclinic:localDate date="${booking.checkout}" pattern="yyyy/MM/dd"/></td>
-                    </tr>
-                </c:if>
-            </c:forEach>
-        </table>
     </jsp:body>
 
 </petclinic:layout>

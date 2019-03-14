@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,8 +28,9 @@ public class Booking extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
-
-    @Column(name="shortDescription")
+    
+    @NotBlank
+    @Column(name="short_description")
     private String shortDescription;
 
 

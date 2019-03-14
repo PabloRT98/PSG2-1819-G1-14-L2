@@ -15,15 +15,19 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Booking;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -40,7 +44,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class BookingController {
 
-    private final ClinicService clinicService;
+    private static final String VIEWS_BOOKS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdateBookingForm";
+	private final ClinicService clinicService;
 
     @Autowired
     public BookingController(ClinicService clinicService) {
@@ -70,25 +75,52 @@ public class BookingController {
         return booking;
     }
 
-    @RequestMapping(value = "/owners/*/pets/{petId}/bookings/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/new", method = RequestMethod.GET)
     public String initNewBookingForm(@PathVariable("petId") int petId, Map<String, Object> model) {
-        return "pets/createOrUpdateBookingForm";
+    	 Booking booking = new Booking();
+    	 booking.setPet(clinicService.findPetById(petId));
+         model.put("booking", booking);
+         return VIEWS_BOOKS_CREATE_OR_UPDATE_FORM;
     }
+    
 
     @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/new", method = RequestMethod.POST)
     public String processNewHotelForm(@Valid Booking booking, BindingResult result) {
+    	 if (result.hasErrors()) {
+             return VIEWS_BOOKS_CREATE_OR_UPDATE_FORM;
+         } else {
+        	 Assert.isTrue(booking.getCheckin().isBefore(booking.getCheckout()),"La fecha de Check-In tiene que ser anterior a la fecha de Check-Out");
+             this.clinicService.saveBooking(booking);
+             return "redirect:/owners/{ownerId}/pets/{petId}/bookings";
+         }
+    }
+    
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/{bookId}/edit", method = RequestMethod.GET)
+    public String initUpdateVetForm(@PathVariable("bookId") int bookId, Model model) {
+        Booking booking= this.clinicService.findBookingById(bookId);
+        model.addAttribute(booking);
+        return VIEWS_BOOKS_CREATE_OR_UPDATE_FORM;
+    }
+
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/{bookId}/edit", method = RequestMethod.POST)
+    public String processUpdateVetForm(@Valid Booking booking, BindingResult result, @PathVariable("bookId") int bookId) {
         if (result.hasErrors()) {
-            return "pets/createOrUpdateBookingForm";
+            return VIEWS_BOOKS_CREATE_OR_UPDATE_FORM;
         } else {
+        	Assert.isTrue(booking.getCheckin().isBefore(booking.getCheckout()),"La fecha de Check-In tiene que ser anterior a la fecha de Check-Out");
+        	booking.setId(bookId);
             this.clinicService.saveBooking(booking);
-            return "redirect:/owners/{ownerId}";
+            return "redirect:/owners/{ownerId}/pets/{petId}/bookings";
         }
     }
 
-    @RequestMapping(value = "/owners/*/pets/{petId}/bookings", method = RequestMethod.GET)
+    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings", method = RequestMethod.GET)
     public String showbookings(@PathVariable int petId, Map<String, Object> model) {
-        model.put("bookings", this.clinicService.findPetById(petId).getBookings());
-        return "bookingList";
+    	Collection<Booking> results = clinicService.findBookingsByPetId(petId);
+    	Pet pet= clinicService.findPetById(petId);
+    	model.put("resultados", results);
+    	model.put("pet", pet);
+        return "pets/bookingList";
     }
     
     @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/{bookingId}/delete", method = RequestMethod.GET)
@@ -100,7 +132,7 @@ public class BookingController {
         this.clinicService.savePet(pet);
 
         this.clinicService.deleteBooking(bookingId);
-        return "redirect:/owners/{ownerId}";
+        return "redirect:/owners/{ownerId}/pets/{petId}/bookings";
      
     }
 
